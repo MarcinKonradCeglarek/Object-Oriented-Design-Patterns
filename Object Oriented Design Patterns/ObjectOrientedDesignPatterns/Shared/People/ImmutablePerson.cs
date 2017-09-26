@@ -6,14 +6,17 @@ namespace ObjectOrientedDesignPatterns.Shared.People
 
     public class ImmutablePerson
     {
-        public ImmutablePerson(List<string> names, DateTime birthDate, ImmutableAddress placeOfBirth, string favouriteColor, ImmutableAddress address)
+        public ImmutablePerson(Guid id, List<string> names, DateTime birthDate, ImmutableAddress placeOfBirth, string favouriteColor, ImmutableAddress address)
         {
+            this.Id = id;
             this.Names = names;
             this.BirthDate = birthDate;
             this.PlaceOfBirth = placeOfBirth;
             this.FavouriteColor = favouriteColor;
             this.CurrentAddress = address;
         }
+
+        public Guid Id { get; }
 
         public List<string> Names { get; }
 

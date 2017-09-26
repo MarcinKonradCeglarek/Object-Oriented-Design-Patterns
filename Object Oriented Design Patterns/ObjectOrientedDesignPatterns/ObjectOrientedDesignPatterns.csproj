@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Builder\RectangleBuilder.cs" />
     <Compile Include="Builder\RectangleBuilderTests.cs" />
+    <Compile Include="DataStructuresBenchmark\DataStructuresBenchmark.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\People\ImmutableAddress.cs" />
     <Compile Include="Shared\People\ImmutablePerson.cs" />
