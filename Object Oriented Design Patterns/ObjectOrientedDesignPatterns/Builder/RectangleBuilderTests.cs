@@ -1,5 +1,7 @@
 ﻿namespace ObjectOrientedDesignPatterns.Builder
 {
+    using System;
+
     using ObjectOrientedDesignPatterns.Shared.Shapes;
 
     using Ploeh.AutoFixture;
@@ -30,17 +32,41 @@
             var width = this.fixture.Create<double>();
             var height = this.fixture.Create<double>();
                 
-            var expected = new Rectangle(width, height);
+            var expected = new Rectangle(height, width);
 
             // Act
             var actual = new RectangleBuilder().Width(width).Height(height).Build();
 
             // Assert
-            Assert.Equal(expected.Area, actual.Area);
-            Assert.Equal(expected.Perimeter, actual.Perimeter);
+            Assert.Equal(expected, actual);
+        }
 
-            Assert.Equal(width, actual.Width);
-            Assert.Equal(height, actual.Height);
+        [Fact]
+        public void RectangleBuilder_WithJustHeight_BuildsRectangle()
+        {
+            // Arrange
+            var d = this.fixture.Create<double>();
+            var expected = new Rectangle(d, RectangleBuilder.DefaultWidth);
+
+            // Act & Assert
+            var actual = new RectangleBuilder().Height(d).Build();
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void RectangleBuilder_WithJustWidth_BuildsRectangle()
+        {
+            // Arrange
+            var d = this.fixture.Create<double>();
+            var expected = new Rectangle(RectangleBuilder.DefaultHeight, d);
+
+            // Act & Assert
+            var actual = new RectangleBuilder().Width(d).Build();
+
+            // Assert
+            Assert.Equal(expected, actual);
         }
     }
 }

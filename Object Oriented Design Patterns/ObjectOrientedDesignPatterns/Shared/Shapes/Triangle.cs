@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.CompilerServices;
 
     public class Triangle : Shape
     {
@@ -27,7 +28,9 @@
 
         public double C { get; }
 
-        public override double Area => 0;
+        public override double Area => Math.Sqrt(this.Semiperimeter * (this.Semiperimeter - this.A) * (this.Semiperimeter - this.B) * (this.Semiperimeter - this.C));
+
+        private double Semiperimeter => this.Perimeter / 2;
 
         public override double Perimeter => this.A + this.B + this.C;
     }

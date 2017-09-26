@@ -10,11 +10,22 @@
         public void Triangle_A5B5C5_ReturnsValidAreaAndPerimeter()
         {
             // Arrange
-            var sut = new Triangle(5, 5, 5);
+            var sut = new Triangle(6, 6, 6);
 
             // Assert
-            Assert.Equal(15, sut.Perimeter);
-            Assert.Equal(13.97542485937368560255733542957, sut.Area);
+            Assert.Equal(18, sut.Perimeter);
+            Assert.Equal(14.52996, sut.Area);
+        }
+
+        [Fact]
+        public void Triangle_A5B4C3_ReturnsValidAreaAndPerimeter()
+        {
+            // Arrange
+            var sut = new Triangle(5, 4, 3);
+
+            // Assert
+            Assert.Equal(12, sut.Perimeter);
+            Assert.Equal(6, sut.Area);
         }
 
         [Fact]

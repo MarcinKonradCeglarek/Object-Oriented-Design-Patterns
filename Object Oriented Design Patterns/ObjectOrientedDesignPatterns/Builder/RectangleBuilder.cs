@@ -1,12 +1,18 @@
 ﻿namespace ObjectOrientedDesignPatterns.Builder
 {
+    using System;
+
     using ObjectOrientedDesignPatterns.Shared.Shapes;
 
     public class RectangleBuilder
     {
-        private double height = 5;
+        public const double DefaultHeight = 5.0;
 
-        private double width = 5;
+        public const double DefaultWidth = 5.0;
+
+        private double height = DefaultHeight;
+
+        private double width = DefaultWidth;
 
         private string borderColor = "White";
 
