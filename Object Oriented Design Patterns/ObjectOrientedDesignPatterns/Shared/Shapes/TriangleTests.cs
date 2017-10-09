@@ -13,8 +13,8 @@
             var sut = new Triangle(6, 6, 6);
 
             // Assert
-            Assert.Equal(18, sut.Perimeter);
-            Assert.Equal(14.52996, sut.Area);
+            AssertDoubleEquality(18, sut.Perimeter);
+            AssertDoubleEquality(15.5884572681199, sut.Area);
         }
 
         [Fact]
@@ -24,8 +24,8 @@
             var sut = new Triangle(5, 4, 3);
 
             // Assert
-            Assert.Equal(12, sut.Perimeter);
-            Assert.Equal(6, sut.Area);
+            AssertDoubleEquality(12, sut.Perimeter);
+            AssertDoubleEquality(6, sut.Area);
         }
 
         [Fact]
@@ -35,8 +35,8 @@
             var sut = new Triangle(0, 0, 0);
 
             // Assert
-            Assert.Equal(0, sut.Perimeter);
-            Assert.Equal(0, sut.Area);
+            AssertDoubleEquality(0, sut.Perimeter);
+            AssertDoubleEquality(0, sut.Area);
         }
 
         [Fact]
@@ -44,6 +44,11 @@
         {
             // Arrange
             var exception = Assert.Throws<ArgumentException>(() => new Triangle(1, 1, 9));
+        }
+
+        private static bool AssertDoubleEquality(double a, double b)
+        {
+            return a - b < a / 10000000;
         }
     }
 }

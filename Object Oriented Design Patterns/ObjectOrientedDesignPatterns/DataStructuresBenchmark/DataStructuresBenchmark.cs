@@ -11,9 +11,9 @@
 
     public class DataStructuresBenchmark
     {
-        private const int TotalCount = 10000;
+        private const int TotalCount = 20000;
 
-        private const int SearchCount = 1000;
+        private const int SearchCount = 2000;
 
         private readonly Random random = new Random();
 
@@ -33,26 +33,32 @@
                 this.guidsToFind.Add(ids.Skip(this.random.Next(TotalCount - 1)).Take(1).Single());
             }
 
-            var sortedList = this.Generate<SortedList<Guid, ImmutablePerson>>(people, (obj, person) => obj.Add(person.Id, person));
-            var hashSet = this.Generate<HashSet<ImmutablePerson>>(people, (hashset, person) => hashset.Add(person));
-            var dictionary = this.Generate<Dictionary<Guid, ImmutablePerson>>(people, (dict, person) => dict.Add(person.Id, person));
+            var sortedList = this.Generate<SortedList<Guid, ImmutablePerson>>("SortedList", people, (obj, person) => obj.Add(person.Id, person));
+            var hashSet = this.Generate<HashSet<ImmutablePerson>>("HashSet", people, (hashset, person) => hashset.Add(person));
+            var dictionary = this.Generate<Dictionary<Guid, ImmutablePerson>>("Dictionary", people, (dict, person) => dict.Add(person.Id, person));
 
             this.Test("Index on SortedList", sortedList, (sortedlist, guid) => sortedlist[guid]);
             this.Test("First on hashset", hashSet, (hashset, guid) => hashset.First(x => x.Id == guid));
             this.Test("Last on hashset", hashSet, (hashset, guid) => hashset.Last(x => x.Id == guid));
             this.Test("Single on hashset", hashSet, (hashset, guid) => hashset.Single(x => x.Id == guid));
-            this.Test("Dictionary", dictionary, (dict, guid) => dict[guid]);
+            this.Test("Index on Dictionary", dictionary, (dict, guid) => dict[guid]);
+            this.Test("Find in a Dictionary", dictionary, (dict, guid) => dict.First(e => e.Value.Id == guid).Value);
         }
 
-        private T Generate<T>(IEnumerable<ImmutablePerson> set, Action<T, ImmutablePerson> action)
+        private T Generate<T>(string type, IEnumerable<ImmutablePerson> set, Action<T, ImmutablePerson> addToSetAction)
             where T : new()
         {
+            this.stopwatch.Start();
             var retVal = new T();
 
             foreach (var immutablePerson in set)
             {
-                action(retVal, immutablePerson);
+                addToSetAction(retVal, immutablePerson);
             }
+
+            this.stopwatch.Stop();
+            Trace.TraceInformation($"Creating {type} took {this.stopwatch.Elapsed}");
+            this.stopwatch.Reset();
 
             return retVal;
         }
